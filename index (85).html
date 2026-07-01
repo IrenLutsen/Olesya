@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Olesya Lylak-Chyzhovych — Two Lands, Two Suns</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F2A44;
+    --navy-2:#193A5C;
+    --sand:#F6F0E3;
+    --sand-2:#EEE4D0;
+    --ink:#1C1B18;
+    --ink-soft:#4C493F;
+    --gold:#E3A73B;
+    --gold-soft:#F1CB86;
+    --terracotta:#D9613C;
+    --terracotta-soft:#EFA483;
+    --sky:#3E76A6;
+    --line:rgba(28,27,24,.13);
+    --line-dark:rgba(255,255,255,.14);
+    --radius:18px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--sand);
+    color:var(--ink);
+    font-family:'Manrope',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces',serif;
+    font-weight:560;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  p{margin:0;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 28px;}
+
+  /* language toggling */
+  .lang-ua, .lang-es{display:none !important;}
+  body[data-lang="ua"] .lang-ua{display:block !important;}
+  body[data-lang="es"] .lang-es{display:block !important;}
+  body[data-lang="ua"] .lang-ua.inline{display:inline !important;}
+  body[data-lang="es"] .lang-es.inline{display:inline !important;}
+  body[data-lang="ua"] .lang-ua.iblock{display:inline-block !important;}
+  body[data-lang="es"] .lang-es.iblock{display:inline-block !important;}
+  body[data-lang="ua"] .lang-ua.flex{display:flex !important;}
+  body[data-lang="es"] .lang-es.flex{display:flex !important;}
+  body[data-lang="ua"] .lang-ua.grid{display:grid !important;}
+  body[data-lang="es"] .lang-es.grid{display:grid !important;}
+
+  /* topbar */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(246,240,227,.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:66px;
+  }
+  .brandmark{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;}
+  .suns-mini{width:26px;height:26px;flex:none;}
+  .lang-switch{display:flex;gap:6px;background:var(--sand-2);padding:4px;border-radius:999px;}
+  .lang-switch button{
+    border:none;background:transparent;padding:7px 14px;border-radius:999px;
+    font-family:'Manrope';font-weight:700;font-size:12.5px;letter-spacing:.04em;
+    cursor:pointer;color:var(--ink-soft);
+  }
+  .lang-switch button.active{background:var(--navy);color:var(--sand);}
+
+  /* eyebrow / labels */
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--terracotta);margin-bottom:16px;
+  }
+  .eyebrow .dot-pair{width:16px;height:16px;flex:none;}
+  section.on-dark .eyebrow{color:var(--gold-soft);}
+
+  /* HERO */
+  .hero{
+    position:relative;background:var(--navy);color:var(--sand);
+    overflow:hidden;padding:96px 0 76px;
+  }
+  .hero .suns-bg{
+    position:absolute;top:-140px;right:-160px;width:640px;height:640px;opacity:.9;pointer-events:none;
+  }
+  .hero-grid{
+    position:relative;z-index:2;
+    display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;
+  }
+  .hero h1{font-size:clamp(38px,5.2vw,64px);line-height:1.03;color:#fff;}
+  .hero .role{
+    margin-top:18px;font-size:clamp(16px,1.9vw,20px);color:var(--sand);opacity:.92;max-width:520px;
+  }
+  .hero .cta-row{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:13px 22px;border-radius:999px;font-weight:700;font-size:14.5px;
+    border:1px solid transparent;cursor:pointer;transition:transform .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--gold);color:var(--navy);}
+  .btn-ghost{border-color:rgba(255,255,255,.35);color:#fff;}
+  .btn-ghost:hover{border-color:#fff;}
+  .btn-dark{background:var(--navy);color:var(--sand);}
+  .btn-dark:hover{background:#0b2036;}
+
+  .photo-card{
+    position:relative;border-radius:24px;overflow:hidden;
+    box-shadow:0 30px 60px rgba(0,0,0,.35);
+    border:1px solid rgba(255,255,255,.15);
+  }
+  .photo-card img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/5;}
+  .photo-tag{
+    position:absolute;left:16px;bottom:16px;background:rgba(15,42,68,.82);
+    color:#fff;padding:8px 14px;border-radius:12px;font-size:12.5px;font-weight:600;
+    backdrop-filter:blur(4px);
+  }
+
+  .stat-strip{
+    position:relative;z-index:2;margin-top:64px;
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--line-dark);padding-top:28px;gap:20px;
+  }
+  .stat b{font-family:'Fraunces';font-size:30px;color:var(--gold-soft);font-weight:600;display:block;}
+  .stat span{font-size:13px;color:var(--sand);opacity:.8;}
+
+  /* SECTION generic */
+  section{padding:88px 0;}
+  .section-head{max-width:640px;margin-bottom:48px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,40px);}
+  .on-dark{background:var(--navy);color:var(--sand);}
+  .on-dark h2{color:#fff;}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:start;}
+  .about-photo{border-radius:20px;overflow:hidden;border:1px solid var(--line);}
+  .about-photo img{aspect-ratio:1/1;object-fit:cover;object-position:top;}
+  .bio p{margin-bottom:16px;color:var(--ink-soft);font-size:16.5px;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
+  .chip{
+    border:1px solid var(--line);background:#fff;padding:9px 15px;border-radius:999px;
+    font-size:13px;font-weight:600;color:var(--navy);
+  }
+
+  /* TIMELINE */
+  .timeline{position:relative;margin-top:8px;}
+  .timeline::before{
+    content:"";position:absolute;left:108px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(var(--gold),var(--terracotta));opacity:.55;
+  }
+  .t-item{display:grid;grid-template-columns:90px 30px 1fr;gap:0 22px;padding:22px 0;position:relative;}
+  .t-item + .t-item{border-top:1px solid var(--line-dark);}
+  .t-date{font-family:'Fraunces';font-weight:600;font-size:17px;color:var(--gold-soft);align-self:start;padding-top:2px;}
+  .t-dot{width:14px;height:14px;border-radius:50%;background:var(--terracotta);border:3px solid var(--navy);box-shadow:0 0 0 2px rgba(255,255,255,.25);align-self:start;margin-top:4px;justify-self:center;}
+  .t-tag{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--navy);background:var(--sand);padding:4px 10px;border-radius:999px;margin-bottom:8px;
+  }
+  .t-body p{color:var(--sand);opacity:.9;font-size:15px;}
+  .t-body strong{color:#fff;}
+
+  /* SPLIT CARD (association / academy) */
+  .split{
+    display:grid;grid-template-columns:.9fr 1.1fr;gap:0;
+    border-radius:24px;overflow:hidden;border:1px solid var(--line);background:#fff;
+  }
+  .split.reverse{grid-template-columns:1.1fr .9fr;}
+  .split.reverse .split-panel{order:2;}
+  .split-panel{
+    background:var(--navy);color:var(--sand);padding:44px 38px;
+    display:flex;flex-direction:column;justify-content:center;gap:18px;
+  }
+  .split.reverse .split-panel{background:linear-gradient(135deg,var(--terracotta),#b6461f);}
+  .split-panel .mark{width:52px;height:52px;}
+  .split-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px;}
+  .split-stats b{display:block;font-family:'Fraunces';font-size:24px;color:var(--gold-soft);}
+  .split.reverse .split-stats b{color:#fff;}
+  .split-stats span{font-size:12.5px;opacity:.85;}
+  .split-content{padding:44px 40px;}
+  .split-content h3{font-size:26px;margin-bottom:14px;}
+  .split-content p{color:var(--ink-soft);margin-bottom:14px;font-size:15.5px;}
+  .split-content ul{margin:0 0 20px;padding-left:18px;color:var(--ink-soft);font-size:15px;}
+  .split-content li{margin-bottom:6px;}
+
+  /* RECOGNITION grid */
+  .rec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  .rec-card{
+    background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px 22px;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .rec-year{font-family:'Fraunces';font-size:15px;color:var(--terracotta);font-weight:600;}
+  .rec-card h4{font-size:16.5px;font-weight:800;font-family:'Manrope';margin:0;}
+  .rec-card p{font-size:13.8px;color:var(--ink-soft);}
+
+  /* VISION */
+  .vision{background:linear-gradient(180deg,var(--navy),#0a1e33);}
+  .vision-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start;}
+  .vision blockquote{
+    font-family:'Fraunces';font-size:clamp(22px,2.6vw,30px);line-height:1.32;color:#fff;margin:0;font-weight:500;
+  }
+  .vision blockquote::before{content:"“";color:var(--gold-soft);}
+  .vision blockquote::after{content:"”";color:var(--gold-soft);}
+  .vision-list{display:flex;flex-direction:column;gap:18px;}
+  .vision-list .vi{display:flex;gap:14px;}
+  .vision-list .vi .num{
+    font-family:'Fraunces';color:var(--gold-soft);font-size:14px;border:1px solid var(--line-dark);
+    width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;
+  }
+  .vision-list p{color:var(--sand);opacity:.92;font-size:15px;}
+  .vision-list strong{color:#fff;}
+
+  /* CONTACT */
+  .contact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:36px;}
+  .c-card{
+    background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .c-card .lbl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--terracotta);}
+  .c-card .val{font-family:'Fraunces';font-size:19px;font-weight:600;}
+  .site-links{display:flex;gap:14px;flex-wrap:wrap;}
+
+  footer{background:var(--navy);color:var(--sand);opacity:.85;padding:34px 0;font-size:13px;text-align:center;}
+
+  @media(max-width:880px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero .suns-bg{width:380px;height:380px;top:-90px;right:-140px;opacity:.55;}
+    .stat-strip{grid-template-columns:repeat(2,1fr);row-gap:22px;}
+    .about-grid{grid-template-columns:1fr;}
+    .split,.split.reverse{grid-template-columns:1fr;}
+    .split.reverse .split-panel{order:0;}
+    .rec-grid{grid-template-columns:repeat(2,1fr);}
+    .vision-grid{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:repeat(2,1fr);}
+    .timeline::before{left:14px;}
+    .t-item{grid-template-columns:26px 1fr;}
+    .t-date{grid-column:1/3;padding-top:0;}
+    .t-dot{grid-row:2;}
+  }
+</style>
+</head>
+<body data-lang="ua">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="brandmark">
+      <svg class="suns-mini" viewBox="0 0 40 40"><circle cx="16" cy="20" r="13" fill="#E3A73B" fill-opacity="0.9"/><circle cx="25" cy="20" r="13" fill="#D9613C" fill-opacity="0.75"/></svg>
+      <span>Olesya Lylak-Chyzhovych</span>
+    </div>
+    <div class="lang-switch">
+      <button data-set="ua" class="active" onclick="setLang('ua')">УКР</button>
+      <button data-set="es" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="suns-bg" viewBox="0 0 640 640" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="250" cy="300" r="190" fill="#E3A73B" fill-opacity="0.5"/>
+    <circle cx="420" cy="300" r="190" fill="#D9613C" fill-opacity="0.4"/>
+  </svg>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">
+        <svg class="dot-pair" viewBox="0 0 16 16"><circle cx="6" cy="8" r="5.5" fill="#E3A73B"/><circle cx="10" cy="8" r="5.5" fill="#D9613C" fill-opacity="0.85"/></svg>
+        <span class="lang-ua inline">Кандидатура · Representante para el Mundo Hispanohablante, Womafreesm</span>
+        <span class="lang-es inline">Candidatura · Representante para el Mundo Hispanohablante, Womafreesm</span>
+      </div>
+      <h1 class="lang-ua">Олеся<br>Лилак-Чижович</h1>
+      <h1 class="lang-es">Olesya<br>Lylak-Chyzhovych</h1>
+
+      <p class="role lang-ua">Мостобудівниця між двома землями. Президентка асоціації «Дві Землі, Два Сонця», засновниця Two Suns Academy, культурна дипломатка українців Канарських островів.</p>
+      <p class="role lang-es">Constructora de puentes entre dos tierras. Presidenta de la Asociación «Dos Tierras, Dos Soles», fundadora de Two Suns Academy, diplomática cultural de la comunidad ucraniana en Canarias.</p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://wa.me/34660020482" target="_blank">
+          <span class="lang-ua inline">Написати у WhatsApp</span><span class="lang-es inline">Escribir por WhatsApp</span>
+        </a>
+        <a class="btn btn-ghost" href="https://www.instagram.com/olesyalylak_official" target="_blank">Instagram →</a>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="olesya.jpg" alt="Olesya Lylak-Chyzhovych">
+      <div class="photo-tag lang-ua">Гран-Канарія, Іспанія</div>
+      <div class="photo-tag lang-es">Gran Canaria, España</div>
+    </div>
+  </div>
+
+  <div class="wrap stat-strip">
+    <div class="stat"><b>2018</b><span class="lang-ua inline">рік заснування асоціації</span><span class="lang-es inline">año de fundación de la asociación</span></div>
+    <div class="stat"><b>6+</b><span class="lang-ua inline">років на Канарських островах</span><span class="lang-es inline">años en las Islas Canarias</span></div>
+    <div class="stat"><b>35+</b><span class="lang-ua inline">членів асоціації</span><span class="lang-es inline">miembros de la asociación</span></div>
+    <div class="stat"><b>3</b><span class="lang-ua inline">мови роботи: укр · ісп · англ</span><span class="lang-es inline">idiomas de trabajo: ucr · esp · ing</span></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-photo">
+      <img src="olesya.jpg" alt="Olesya Lylak-Chyzhovych">
+    </div>
+    <div>
+      <div class="section-head" style="margin-bottom:22px;">
+        <div class="eyebrow">
+          <svg class="dot-pair" viewBox="0 0 16 16"><circle cx="6" cy="8" r="5.5" fill="#E3A73B"/><circle cx="10" cy="8" r="5.5" fill="#D9613C" fill-opacity="0.85"/></svg>
+          <span class="lang-ua inline">Про неї</span><span class="lang-es inline">Sobre ella</span>
+        </div>
+        <h2 class="lang-ua">Дві землі в одному серці</h2>
+        <h2 class="lang-es">Dos tierras en un mismo corazón</h2>
+      </div>
+      <div class="bio lang-ua">
+        <p>Олеся Лилак-Чижович родом зі Львівщини. Понад шість років вона живе на Гран-Канарії, де побудувала одну з найпомітніших українських громадських структур в Іспанії — Асоціацію «Дві Землі, Два Сонця» (Dos Tierras, Dos Soles), яку заснувала у 2018 році та очолює як президентка.</p>
+        <p>Судова перекладачка та правова експертка в іспанській системі, вона поєднує глибоке знання двох культур із практичним досвідом захисту прав людей. Офіційна членкиня правління WFUWO (Всесвітньої федерації українських жіночих організацій), співпрацює зі Світовим Конгресом Українців та Федерацією українських асоціацій в Іспанії.</p>
+        <p>У 2022 році організувала перше представлення українського мистецтва в мадридському музеї Тіссен-Борнемісса, а того ж року отримала відзнаку Уряду Іспанії за підтримку жінок-біженок і протидію гендерному насильству. У 2026 році стала єдиною українкою — дійсною членкинею Королівського економічного товариства друзів країни (Real Sociedad Económica de Amigos del País), заснованого понад 250 років тому.</p>
+      </div>
+      <div class="bio lang-es">
+        <p>Olesya Lylak-Chyzhovych es originaria de la región de Leópolis (Lviv). Desde hace más de seis años vive en Gran Canaria, donde ha construido una de las estructuras cívicas ucranianas más visibles de España: la Asociación «Dos Tierras, Dos Soles», que fundó en 2018 y preside desde entonces.</p>
+        <p>Traductora jurada e intérprete judicial, y experta legal dentro del sistema español, combina un profundo conocimiento de dos culturas con experiencia práctica en la defensa de derechos. Es miembro oficial de la junta de WFUWO (Federación Mundial de Organizaciones de Mujeres Ucranianas) y colabora con el Congreso Mundial Ucraniano y la Federación de Asociaciones Ucranianas en España.</p>
+        <p>En 2022 organizó la primera muestra de arte ucraniano en el Museo Thyssen-Bornemisza de Madrid, y ese mismo año recibió una distinción del Gobierno de España por su apoyo a mujeres refugiadas y su labor contra la violencia de género. En 2026 se convirtió en la única mujer ucraniana miembro numeraria de la Real Sociedad Económica de Amigos del País, institución con más de 250 años de historia.</p>
+      </div>
+
+      <div class="chip-row">
+        <div class="chip lang-ua iblock">⚖️ Судова перекладачка</div>
+        <div class="chip lang-es iblock">⚖️ Traductora jurada</div>
+        <div class="chip lang-ua iblock">🌐 WFUWO · правління</div>
+        <div class="chip lang-es iblock">🌐 WFUWO · junta directiva</div>
+        <div class="chip lang-ua iblock">🎓 Засновниця мовної школи</div>
+        <div class="chip lang-es iblock">🎓 Fundadora de escuela de idiomas</div>
+        <div class="chip lang-ua iblock">🏛️ Real Sociedad Económica</div>
+        <div class="chip lang-es iblock">🏛️ Real Sociedad Económica</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="on-dark" id="timeline">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">
+        <svg class="dot-pair" viewBox="0 0 16 16"><circle cx="6" cy="8" r="5.5" fill="#E3A73B"/><circle cx="10" cy="8" r="5.5" fill="#D9613C" fill-opacity="0.85"/></svg>
+        <span class="lang-ua inline">Шлях</span><span class="lang-es inline">Trayectoria</span>
+      </div>
+      <h2 class="lang-ua">Від громадської ініціативи до інституційного визнання</h2>
+      <h2 class="lang-es">De la iniciativa comunitaria al reconocimiento institucional</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-date">2018</div><div class="t-dot"></div>
+        <div class="t-body">
+          <div class="lang-ua"><span class="t-tag">Заснування</span><p><strong>Заснувала Асоціацію «Дві Землі, Два Сонця»</strong> на Гран-Канарії — організацію, що об'єднує українську діаспору та іспанське суспільство.</p></div>
+          <div class="lang-es"><span class="t-tag">Fundación</span><p><strong>Fundó la Asociación «Dos Tierras, Dos Soles»</strong> en Gran Canaria, una organización que une a la diáspora ucraniana y la sociedad española.</p></div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-date">2022</div><div class="t-dot"></div>
+        <div class="t-body">
+          <div class="lang-ua"><span class="t-tag">Освіта</span><p>Підтримала відкриття <strong>першої української суботньої школи на Гран-Канарії</strong> (Patio de las Culturas), яка діє й досі.</p></div>
+          <div class="lang-es"><span class="t-tag">Educación</span><p>Impulsó la apertura de la <strong>primera escuela ucraniana de fin de semana en Gran Canaria</strong> (Patio de las Culturas), activa hasta hoy.</p></div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-date">2022</div><div class="t-dot"></div>
+        <div class="t-body">
+          <div class="lang-ua"><span class="t-tag">Культурна дипломатія</span><p>Організувала <strong>перше представлення українського мистецтва в музеї Тіссен-Борнемісса</strong> у Мадриді — з привітанням Президента Володимира Зеленського.</p></div>
+          <div class="lang-es"><span class="t-tag">Diplomacia cultural</span><p>Organizó la <strong>primera exposición de arte ucraniano en el Museo Thyssen-Bornemisza</strong> de Madrid, con un saludo del presidente Volodímir Zelenski.</p></div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-date">2022</div><div class="t-dot"></div>
+        <div class="t-body">
+          <div class="lang-ua"><span class="t-tag">Визнання держави</span><p>Асоціація під її керівництвом отримала <strong>відзнаку Уряду Іспанії</strong> за роботу з жінками-біженками та протидію гендерному насильству.</p></div>
+          <div class="lang-es"><span class="t-tag">Reconocimiento estatal</span><p>La asociación, bajo su liderazgo, recibió una <strong>distinción del Gobierno de España</strong> por su trabajo con mujeres refugiadas y contra la violencia de género.</p></div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-date">2023–24</div><div class="t-dot"></div>
+        <div class="t-body">
+          <div class="lang-ua"><span class="t-tag">Партнерства</span><p>Побудувала стабільну співпрацю з <strong>Cabildo de Gran Canaria, мерією Лас-Пальмаса та Вальсекільйо</strong>, курсами ECCA, а також медичне партнерство ICOT із Буковинським медуніверситетом.</p></div>
+          <div class="lang-es"><span class="t-tag">Alianzas</span><p>Consolidó la cooperación con el <strong>Cabildo de Gran Canaria, los ayuntamientos de Las Palmas y Valsequillo</strong>, los cursos de ECCA, y una alianza médica entre ICOT y la Universidad de Chernivtsí.</p></div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-date">2024</div><div class="t-dot"></div>
+        <div class="t-body">
+          <div class="lang-ua"><span class="t-tag">Жіноче лідерство</span><p>Долучилась до міжнародного конгресу жіночого бізнесу на Канарах та зустрічей <strong>«Союзу амбітних жінок»</strong>, поєднуючи українських і місцевих підприємниць.</p></div>
+          <div class="lang-es"><span class="t-tag">Liderazgo femenino</span><p>Participó en el congreso internacional de mujeres empresarias en Canarias y en los encuentros de la <strong>«Unión de Mujeres Ambiciosas»</strong>, conectando a empresarias ucranianas y locales.</p></div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-date">2025</div><div class="t-dot"></div>
+        <div class="t-body">
+          <div class="lang-ua"><span class="t-tag">Мода і мистецтво</span><p>Дебют першої <strong>української весільної колекції на Canary Islands Fashion Week</strong> за підтримки асоціації.</p></div>
+          <div class="lang-es"><span class="t-tag">Moda y arte</span><p>Debut de la primera <strong>colección de novia ucraniana en Canary Islands Fashion Week</strong>, con el respaldo de la asociación.</p></div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-date">2026</div><div class="t-dot"></div>
+        <div class="t-body">
+          <div class="lang-ua"><span class="t-tag">Інституційне визнання</span><p>Стала <strong>дійсною членкинею Real Sociedad Económica de Amigos del País</strong> (250-річна інституція) — єдина українка з цим статусом; отримала премію <strong>Charter 100 / Premios ASOCLUB</strong> за соціальну діяльність на підтримку жінок.</p></div>
+          <div class="lang-es"><span class="t-tag">Reconocimiento institucional</span><p>Se convirtió en <strong>miembro numeraria de la Real Sociedad Económica de Amigos del País</strong> (institución de 250 años) — única mujer ucraniana con este estatus; recibió el premio <strong>Charter 100 / Premios ASOCLUB</strong> por su labor social a favor de las mujeres.</p></div>
+        </div>
+      </div>
+
+      <div class="t-item">
+        <div class="t-date">2026</div><div class="t-dot"></div>
+        <div class="t-body">
+          <div class="lang-ua"><span class="t-tag">Міжнародна дипломатія</span><p>Взяла участь у стратегічній зустрічі <strong>«Андорра і Канарські острови»</strong> з Головою Уряду Канарських островів Фернандо Клавіхо та Головою Уряду Андорри Хав'єром Еспотом у складі Charter 100 Canarias.</p></div>
+          <div class="lang-es"><span class="t-tag">Diplomacia internacional</span><p>Participó en el encuentro estratégico <strong>«Andorra y Canarias»</strong> con el presidente del Gobierno de Canarias, Fernando Clavijo, y el jefe de Gobierno de Andorra, Xavier Espot, como parte de Charter 100 Canarias.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ASSOCIATION -->
+<section id="association">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">
+        <svg class="dot-pair" viewBox="0 0 16 16"><circle cx="6" cy="8" r="5.5" fill="#E3A73B"/><circle cx="10" cy="8" r="5.5" fill="#D9613C" fill-opacity="0.85"/></svg>
+        <span class="lang-ua inline">Її організація</span><span class="lang-es inline">Su organización</span>
+      </div>
+      <h2 class="lang-ua">Асоціація «Дві Землі, Два Сонця»</h2>
+      <h2 class="lang-es">Asociación «Dos Tierras, Dos Soles»</h2>
+    </div>
+
+    <div class="split">
+      <div class="split-panel">
+        <svg class="mark" viewBox="0 0 52 52"><circle cx="20" cy="26" r="17" fill="#E3A73B" fill-opacity="0.85"/><circle cx="33" cy="26" r="17" fill="#D9613C" fill-opacity="0.7"/></svg>
+        <div class="lang-ua"><p style="font-size:14px;opacity:.85;">Провідна організація української громади на Канарських островах з 2018 року.</p></div>
+        <div class="lang-es"><p style="font-size:14px;opacity:.85;">Organización de referencia de la comunidad ucraniana en Canarias desde 2018.</p></div>
+        <div class="split-stats">
+          <div><b>35+</b><span class="lang-ua inline">членів</span><span class="lang-es inline">miembros</span></div>
+          <div><b>15+</b><span class="lang-ua inline">ключових ініціатив</span><span class="lang-es inline">iniciativas clave</span></div>
+          <div><b>3</b><span class="lang-ua inline">острови: Гран-Канарія, Тенерифе, Фуертевентура</span><span class="lang-es inline">islas: Gran Canaria, Tenerife, Fuerteventura</span></div>
+          <div><b>G76351097</b><span class="lang-ua inline">офіційний NIF</span><span class="lang-es inline">NIF oficial</span></div>
+        </div>
+      </div>
+      <div class="split-content">
+        <h3 class="lang-ua">Від притулку до інституції</h3>
+        <h3 class="lang-es">De refugio a institución</h3>
+        <div class="lang-ua">
+          <p>Асоціація об'єднує українську діаспору та іспанське суспільство: юридична й гуманітарна допомога переселенцям, соціальна адаптація, освіта, культурна дипломатія та підтримка жіночого підприємництва. Членкиня WFUWO, Світового Конгресу Українців та Федерації українських асоціацій Іспанії.</p>
+          <ul>
+            <li>Безкоштовна юридична та адміністративна допомога переселенцям</li>
+            <li>Українська суботня школа та курси іспанської з ECCA</li>
+            <li>Психологічна підтримка та кар'єрний коучинг</li>
+            <li>Культурні фестивалі, виставки та збереження традицій</li>
+          </ul>
+        </div>
+        <div class="lang-es">
+          <p>La asociación conecta a la diáspora ucraniana con la sociedad española: asistencia jurídica y humanitaria a personas desplazadas, adaptación social, educación, diplomacia cultural y apoyo al emprendimiento femenino. Es miembro de WFUWO, el Congreso Mundial Ucraniano y la Federación de Asociaciones Ucranianas en España.</p>
+          <ul>
+            <li>Asistencia jurídica y administrativa gratuita para personas desplazadas</li>
+            <li>Escuela ucraniana de fin de semana y cursos de español con ECCA</li>
+            <li>Apoyo psicológico y coaching profesional</li>
+            <li>Festivales culturales, exposiciones y preservación de tradiciones</li>
+          </ul>
+        </div>
+        <a class="btn btn-dark" href="https://irenlutsen.github.io/Two-lands-two-suns/" target="_blank">
+          <span class="lang-ua inline">Перейти на сайт асоціації</span><span class="lang-es inline">Ver el sitio de la asociación</span> →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACADEMY -->
+<section id="academy" style="padding-top:0;">
+  <div class="wrap">
+    <div class="split reverse">
+      <div class="split-content">
+        <h3 class="lang-ua">Two Suns Academy</h3>
+        <h3 class="lang-es">Two Suns Academy</h3>
+        <div class="lang-ua">
+          <p>Онлайн-школа іспанської, англійської та української мов, яку Олеся заснувала й курує особисто. Міні-групи по 4–6 осіб, жива розмовна практика з першого заняття, офіційний диплом ECCAEDU, визнаний роботодавцями та установами ЄС.</p>
+          <ul>
+            <li>Роками викладає іспанську, знає, як швидко навчити говорити</li>
+            <li>Курси для дорослих: від нуля до рівня вільного спілкування</li>
+            <li>Щомісячні живі зустрічі про життя й культуру на Канарах</li>
+          </ul>
+        </div>
+        <div class="lang-es">
+          <p>Escuela online de español, inglés y ucraniano que Olesya fundó y dirige personalmente. Mini-grupos de 4-6 personas, práctica oral desde la primera clase, y diploma oficial ECCAEDU, reconocido por empleadores e instituciones de la UE.</p>
+          <ul>
+            <li>Años de experiencia enseñando español con un método práctico</li>
+            <li>Cursos para adultos: desde cero hasta la fluidez</li>
+            <li>Encuentros mensuales en vivo sobre vida y cultura en Canarias</li>
+          </ul>
+        </div>
+        <a class="btn btn-dark" href="https://irenlutsen.github.io/Spanish/" target="_blank">
+          <span class="lang-ua inline">Перейти на сайт школи</span><span class="lang-es inline">Ver el sitio de la escuela</span> →
+        </a>
+      </div>
+      <div class="split-panel">
+        <svg class="mark" viewBox="0 0 52 52"><circle cx="20" cy="26" r="17" fill="#fff" fill-opacity="0.85"/><circle cx="33" cy="26" r="17" fill="#fff" fill-opacity="0.5"/></svg>
+        <div class="lang-ua"><p style="font-size:14px;opacity:.9;">Мовна освіта як міст до нового життя в Іспанії.</p></div>
+        <div class="lang-es"><p style="font-size:14px;opacity:.9;">Educación lingüística como puente hacia una nueva vida en España.</p></div>
+        <div class="split-stats">
+          <div><b>A0–C1</b><span class="lang-ua inline">рівні за CEFR</span><span class="lang-es inline">niveles según el MCER</span></div>
+          <div><b>3</b><span class="lang-ua inline">мови викладання</span><span class="lang-es inline">idiomas de enseñanza</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECOGNITION -->
+<section id="recognition" style="background:var(--sand-2);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">
+        <svg class="dot-pair" viewBox="0 0 16 16"><circle cx="6" cy="8" r="5.5" fill="#E3A73B"/><circle cx="10" cy="8" r="5.5" fill="#D9613C" fill-opacity="0.85"/></svg>
+        <span class="lang-ua inline">Визнання</span><span class="lang-es inline">Reconocimientos</span>
+      </div>
+      <h2 class="lang-ua">Відзнаки та інституційне визнання</h2>
+      <h2 class="lang-es">Distinciones y reconocimiento institucional</h2>
+    </div>
+    <div class="rec-grid lang-ua grid">
+      <div class="rec-card"><div class="rec-year">2022</div><h4>Музей Тіссен-Борнемісса</h4><p>Перша виставка українського мистецтва в Мадриді, привітання Президента Зеленського.</p></div>
+      <div class="rec-card"><div class="rec-year">2022</div><h4>Відзнака Уряду Іспанії</h4><p>За підтримку жінок-біженок і протидію гендерному насильству.</p></div>
+      <div class="rec-card"><div class="rec-year">2026</div><h4>Real Sociedad Económica</h4><p>Дійсна членкиня 250-річної інституції — єдина українка з таким статусом.</p></div>
+      <div class="rec-card"><div class="rec-year">2026</div><h4>Charter 100 · Premios ASOCLUB</h4><p>Відзнака за соціальну діяльність та внесок у підтримку жінок.</p></div>
+    </div>
+    <div class="rec-grid lang-es grid">
+      <div class="rec-card"><div class="rec-year">2022</div><h4>Museo Thyssen-Bornemisza</h4><p>Primera exposición de arte ucraniano en Madrid, con saludo del presidente Zelenski.</p></div>
+      <div class="rec-card"><div class="rec-year">2022</div><h4>Distinción del Gobierno de España</h4><p>Por su apoyo a mujeres refugiadas y su lucha contra la violencia de género.</p></div>
+      <div class="rec-card"><div class="rec-year">2026</div><h4>Real Sociedad Económica</h4><p>Miembro numeraria de la institución de 250 años — única mujer ucraniana con este estatus.</p></div>
+      <div class="rec-card"><div class="rec-year">2026</div><h4>Charter 100 · Premios ASOCLUB</h4><p>Reconocimiento por su labor social y su contribución al empoderamiento femenino.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="vision on-dark" id="vision">
+  <div class="wrap vision-grid">
+    <div>
+      <div class="eyebrow">
+        <svg class="dot-pair" viewBox="0 0 16 16"><circle cx="6" cy="8" r="5.5" fill="#E3A73B"/><circle cx="10" cy="8" r="5.5" fill="#D9613C" fill-opacity="0.85"/></svg>
+        <span class="lang-ua inline">Бачення ролі</span><span class="lang-es inline">Visión del rol</span>
+      </div>
+      <blockquote class="lang-ua">Я вже сім років будую структуру з нуля на двох землях. Готова робити те саме для всього іспаномовного світу.</blockquote>
+      <blockquote class="lang-es">Llevo siete años construyendo una estructura desde cero entre dos tierras. Estoy lista para hacer lo mismo por todo el mundo hispanohablante.</blockquote>
+    </div>
+    <div class="vision-list">
+      <div class="vi lang-ua flex"><div class="num">01</div><p><strong>Досвід побудови «з нуля».</strong> Асоціація «Дві Землі, Два Сонця» виросла з ініціативи в інституцію, визнану урядами Іспанії та Канарських островів — саме такий досвід потрібен для нової ролі.</p></div>
+      <div class="vi lang-ua flex"><div class="num">02</div><p><strong>Мови й культурний місток.</strong> Судова перекладачка з рівнем правового експерта в іспанській системі, вільно працює українською, іспанською та англійською.</p></div>
+      <div class="vi lang-ua flex"><div class="num">03</div><p><strong>Мережа інституцій і жіночих лідерок.</strong> Правління WFUWO, Світовий Конгрес Українців, «Союз амбітних жінок», Real Sociedad Económica, Charter 100 Canarias.</p></div>
+      <div class="vi lang-ua flex"><div class="num">04</div><p><strong>Досвід цифрової освіти.</strong> Заснувала й веде власну онлайн-школу — розуміє, як будувати навчальні системи та координувати команди на відстані.</p></div>
+
+      <div class="vi lang-es flex"><div class="num">01</div><p><strong>Experiencia construyendo desde cero.</strong> La Asociación «Dos Tierras, Dos Soles» pasó de ser una iniciativa a una institución reconocida por los gobiernos de España y Canarias — exactamente la experiencia que exige este nuevo rol.</p></div>
+      <div class="vi lang-es flex"><div class="num">02</div><p><strong>Puente lingüístico y cultural.</strong> Traductora jurada con nivel de experta legal en el sistema español; trabaja con fluidez en ucraniano, español e inglés.</p></div>
+      <div class="vi lang-es flex"><div class="num">03</div><p><strong>Red de instituciones y liderazgo femenino.</strong> Junta de WFUWO, Congreso Mundial Ucraniano, «Unión de Mujeres Ambiciosas», Real Sociedad Económica, Charter 100 Canarias.</p></div>
+      <div class="vi lang-es flex"><div class="num">04</div><p><strong>Experiencia en educación digital.</strong> Fundó y dirige su propia escuela online — sabe cómo construir sistemas formativos y coordinar equipos a distancia.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">
+        <svg class="dot-pair" viewBox="0 0 16 16"><circle cx="6" cy="8" r="5.5" fill="#E3A73B"/><circle cx="10" cy="8" r="5.5" fill="#D9613C" fill-opacity="0.85"/></svg>
+        <span class="lang-ua inline">Контакт</span><span class="lang-es inline">Contacto</span>
+      </div>
+      <h2 class="lang-ua">Поговорімо про співпрацю</h2>
+      <h2 class="lang-es">Hablemos sobre esta colaboración</h2>
+    </div>
+
+    <div class="contact-grid">
+      <a class="c-card" href="https://wa.me/34660020482" target="_blank">
+        <span class="lbl">WhatsApp</span><span class="val">+34 660 020 482</span>
+      </a>
+      <a class="c-card" href="https://www.instagram.com/olesyalylak_official" target="_blank">
+        <span class="lbl">Instagram</span><span class="val">@olesyalylak_official</span>
+      </a>
+      <a class="c-card" href="mailto:olesyalylak@gmail.com">
+        <span class="lbl">Email</span><span class="val">olesyalylak@gmail.com</span>
+      </a>
+      <div class="c-card">
+        <span class="lbl lang-ua inline">Локація</span><span class="lbl lang-es inline">Ubicación</span>
+        <span class="val">Gran Canaria, España</span>
+      </div>
+    </div>
+
+    <div class="site-links">
+      <a class="btn btn-dark" href="https://irenlutsen.github.io/Two-lands-two-suns/" target="_blank"><span class="lang-ua inline">Асоціація</span><span class="lang-es inline">Asociación</span> →</a>
+      <a class="btn btn-dark" href="https://irenlutsen.github.io/Spanish/" target="_blank"><span class="lang-ua inline">Мовна школа</span><span class="lang-es inline">Escuela de idiomas</span> →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="lang-ua inline">Olesya Lylak-Chyzhovych · Гран-Канарія, Іспанія · Дві землі, два сонця</span>
+    <span class="lang-es inline">Olesya Lylak-Chyzhovych · Gran Canaria, España · Dos tierras, dos soles</span>
+  </div>
+</footer>
+
+<script>
+  function setLang(l){
+    document.body.setAttribute('data-lang', l);
+    document.querySelectorAll('.lang-switch button').forEach(function(b){
+      b.classList.toggle('active', b.dataset.set === l);
+    });
+  }
+</script>
+</body>
+</html>
